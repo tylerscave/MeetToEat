@@ -1,3 +1,7 @@
+package com.example.stephencheung.stbs;
+
+import com.google.gson.Gson;
+
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
@@ -5,19 +9,14 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.yelp.v2.Business;
-import com.yelp.v2.YelpSearchResult;
-
 public class RunMe {
 
 	public void start() {
 		// Define your keys, tokens and secrets.  These are available from the Yelp website.  
-		 String CONSUMER_KEY = "ShwF7ALLuZZvMhKMF0n_lw";
-		 String CONSUMER_SECRET = "gj16A--fs0B1CNN6NRJnZBTU0xA";
-		 String TOKEN = "U2Ams3a3c797ASitlWSp_gSL9il78C6L";
-		 String TOKEN_SECRET = "jQ3GIrUP0wajaUk9uwy3JKOV4jI";
+		String CONSUMER_KEY = "ShwF7ALLuZZvMhKMF0n_lw";
+		String CONSUMER_SECRET = "gj16A--fs0B1CNN6NRJnZBTU0xA";
+		String TOKEN = "U2Ams3a3c797ASitlWSp_gSL9il78C6L";
+		String TOKEN_SECRET = "jQ3GIrUP0wajaUk9uwy3JKOV4jI";
 		
 		// Some example values to pass into the Yelp search service.  
 		String lat = "30.361471";
@@ -30,8 +29,8 @@ public class RunMe {
 		Token accessToken = new Token(TOKEN, TOKEN_SECRET);
 		OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search");
 		//request.addQuerystringParameter("ll", lat + "," + lng);
-		request.addQuerystringParameter("location", location);
 		request.addQuerystringParameter("term", category);
+		request.addQuerystringParameter("location", location);
 		service.signRequest(accessToken, request);
 		Response response = request.send();
 		String rawData = response.getBody();
@@ -60,14 +59,6 @@ public class RunMe {
 			System.out.println(rawData);			
 		}
 			
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new RunMe().start();
 	}
 
 }
