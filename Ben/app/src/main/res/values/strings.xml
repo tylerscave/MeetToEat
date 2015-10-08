@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MeatandEat</string>
+
+    <string name="hello_world">Location Tester</string>
+    <string name="location">Location: </string>
+    <string name="action_settings">Settings</string>
+    <string name="stored_input">Text Will go here</string>
+</resources>
