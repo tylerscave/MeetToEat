@@ -20,6 +20,10 @@
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen" >
         </activity>
+        <activity
+            android:name=".LocationSettings"
+            android:label="@string/title_activity_location_settings" >
+        </activity>
     </application>
 
 </manifest>

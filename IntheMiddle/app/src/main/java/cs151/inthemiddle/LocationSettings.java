@@ -7,18 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class HomeScreen extends AppCompatActivity {
+public class LocationSettings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.activity_location_settings);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_screen, menu);
+        getMenuInflater().inflate(R.menu.menu_location_settings, menu);
         return true;
     }
 
@@ -35,10 +35,6 @@ public class HomeScreen extends AppCompatActivity {
             return true;
         }
 
-        if(id == R.id.location_settings){
-            Intent intent = new Intent(this, LocationSettings.class);
-            startActivity(intent);
-        }
         return super.onOptionsItemSelected(item);
     }
 }

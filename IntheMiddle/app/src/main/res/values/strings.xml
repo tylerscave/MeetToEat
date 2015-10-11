@@ -6,4 +6,5 @@
     <string name="Logo_PlaceHolder">Logo</string>
     <string name="text_placeholder">Enter Text Here</string>
     <string name="title_activity_home_screen">Welcome</string>
+    <string name="location_settings">Locations</string>
 </resources>
