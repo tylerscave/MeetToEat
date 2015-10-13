@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">STBS</string>
+    <string name="action_settings">Settings</string>
+    <string name="Logo_PlaceHolder">Logo</string>
+    <string name="text_placeholder">Enter Text Here</string>
+    <string name="title_activity_home_screen">Welcome</string>
+    <string name="location_settings">Locations</string>
+    <string name="hello_world">Location Tester</string>
+    <string name="location">Location: </string>
+    <string name="stored_input">Text Will go here</string>
+</resources>
