@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.lord_tyler.meettoeat" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:name=".MainActivity"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="MeetToEat"
+        android:theme="@style/Theme.DesignDemo" >
+        <activity
+            android:theme="@style/AppTheme.Dark"
+            android:name=".ProfileActivity"
+            android:label="MeetToEat"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".BasicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DesignDemo" />
+
+        <activity
+            android:theme="@style/AppTheme.Dark"
+            android:name="com.parse.ui.ParseLoginActivity"
+            android:label="MeetToEat"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
+                android:value="true"/>
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_EMAIL_AS_USERNAME"
+                android:value="true"/>
+        </activity>
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="NyVoFJnPbYpLaiCcLsWVtQiTO9lzQuXOISpGGr14" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="5c16KhEAhEwYcj4KIUd0A42xeVTcQkx01GEFNBPl" />
+
+    </application>
+
+</manifest>
