@@ -62,7 +62,7 @@ public class BasicActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new GroupFragment(), "Groups");
+        adapter.addFragment(new GroupFragment(ParseUser.getCurrentUser()), "Groups");
         adapter.addFragment(new SearchFragment(), "Find A Place");
         adapter.addFragment(new SearchResultFragment(), "Show Results");
         viewPager.setAdapter(adapter);
