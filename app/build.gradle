@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/YelpClasses'] } }
 }
 
 dependencies {
@@ -26,7 +27,14 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:cardview-v7:23.1.0'
     compile 'com.parse:parse-android:1.10.3'
-
     compile project(':ParseUI-Login')
     compile project(':ParseUI-Widget')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/apache-mime4j-0.6.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/commons-codec-1.3.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/commons-logging-1.1.1.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/gson-1.6.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/httpclient-4.0.3.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/httpcore-4.0.1.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/httpmime-4.0.3.jar')
+    compile files('/Users/stephencheung/Documents/StephenGIT/STBScs151/libs/scribe-1.1.0.jar')
 }

@@ -25,4 +25,4 @@
         <include layout="@layout/com_parse_ui_parse_login_third_party_section" />
     </LinearLayout>
 </LinearLayout>
-<!-- From: file:/E:/Users/Benji/Desktop/TestMaster/ParseUI-Login/src/main/res/layout-land/com_parse_ui_parse_login_fragment.xml --><!-- From: file:/E:/Users/Benji/Desktop/TestMaster/ParseUI-Login/build/intermediates/bundles/debug/res/layout-land/com_parse_ui_parse_login_fragment.xml -->
+<!-- From: file:/Users/stephencheung/Documents/StephenGIT/STBScs151/ParseUI-Login/src/main/res/layout-land/com_parse_ui_parse_login_fragment.xml --><!-- From: file:/Users/stephencheung/Documents/StephenGIT/STBScs151/ParseUI-Login/build/intermediates/bundles/debug/res/layout-land/com_parse_ui_parse_login_fragment.xml -->
