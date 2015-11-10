@@ -2,12 +2,15 @@ package com.example.lord_tyler.meettoeat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lord_tyler.meettoeat.LocationActivity.LocationResult;
 import com.parse.ParseACL;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
@@ -23,6 +26,8 @@ public class ProfileActivity extends Activity {
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
+    private double latitude;
+    private double longitude;
 
     private ParseUser currentUser;
 
@@ -72,6 +77,28 @@ public class ProfileActivity extends Activity {
         ParseACL.setDefaultACL(new ParseACL(), true);
         Intent intent = new Intent(this, BasicActivity.class);
         startActivity(intent);
+        while (latitude == 0.0) {
+            // Get the location of the parse user and send to database
+            LocationActivity myLocation = new LocationActivity();
+            LocationResult locationResult = new LocationResult() {
+                @Override
+                public void gotLocation(Location location) {
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            };
+            myLocation.getLocation(this, locationResult);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        ParseGeoPoint geoPoint = new ParseGeoPoint(latitude,longitude);
+        currentUser.put("userLocation", geoPoint);
+        currentUser.saveInBackground();
+        System.out.println("location = " + latitude + " " + longitude);
+
     }
 
     /**

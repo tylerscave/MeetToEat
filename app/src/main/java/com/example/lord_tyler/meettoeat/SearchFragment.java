@@ -1,12 +1,15 @@
 package com.example.lord_tyler.meettoeat;
 
-import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
+import com.parse.ParseGeoPoint;
 
 /**
  * Created by lord_tyler on 11/3/15.
@@ -15,15 +18,30 @@ public class SearchFragment extends Fragment {
 
     private TextView textout;
     private String yelpsearch2;
+    private ParseGeoPoint geoPoint;
 
-    public SearchFragment()
-    {
 
-        searchYelp();
-        //Button button = (Button) v;
+    public SearchFragment() {
+
         //textout = (TextView) findViewById(R.id.result);
         //textout.setText(yelpsearch2);
         System.out.print(yelpsearch2);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_search,
+                container, false);
+        Button button = (Button) view.findViewById(R.id.btn_search);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchYelp();
+            }
+        });
+        return view;
     }
 
     public void searchYelp()
@@ -41,14 +59,28 @@ public class SearchFragment extends Fragment {
     }
 
     public String getSearch(){
-       // LocationManager manager = (LocationManager)this.getSystemService(LOCATION_SERVICE);
-       // android.location.Location location =new android.location.Location(manager.NETWORK_PROVIDER);
-        //double longitude = location.getLongitude();
-        //double latitude = location.getLatitude();
+
+        /*
+        ParseQuery query = ParseUser.getQuery();
+        query.getInBackground(String.valueOf(new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e == null) {
+                    geoPoint = user.getParseGeoPoint("userLocation");
+                } else
+                    Log.d("userLocation", e.getMessage());
+            }
+        }));
+        System.out.println("geoPoint latitude = " + geoPoint.getLatitude());
+        */
+
+
         RunMe run = new RunMe();
         String searching;
         searching = run.start("Restaurant",37.3382,-121.8863);
-        //searching = new RunMe().start("Restaurant", latitude,longitude);
+        //searching = new RunMe().start("Restaurant", geoPoint.getLatitude(), geoPoint.getLongitude());
         return searching;
+
+
+        }
     }
-}
