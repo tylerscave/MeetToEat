@@ -13,8 +13,6 @@ import java.util.Random;
 
 public class RunMe {
 
-
-
 	public String start(String category, Double lat, Double lng) {
 		// Define your keys, tokens and secrets.  These are available from the Yelp website.
 		API_Static_Stuff key = new API_Static_Stuff();

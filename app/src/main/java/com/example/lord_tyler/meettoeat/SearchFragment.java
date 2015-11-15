@@ -2,11 +2,11 @@ package com.example.lord_tyler.meettoeat;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
 import com.parse.ParseGeoPoint;
@@ -16,17 +16,9 @@ import com.parse.ParseGeoPoint;
  */
 public class SearchFragment extends Fragment {
 
-    private TextView textout;
-    private String yelpsearch2;
+    private static String yelpsearch2;
     private ParseGeoPoint geoPoint;
-
-
-    public SearchFragment() {
-
-        //textout = (TextView) findViewById(R.id.result);
-        //textout.setText(yelpsearch2);
-        System.out.print(yelpsearch2);
-    }
+    private ViewPager vp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,11 +26,21 @@ public class SearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search,
                 container, false);
-        Button button = (Button) view.findViewById(R.id.btn_search);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button) view.findViewById(R.id.btn_search);
+        vp = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchYelp();
+                boolean waiting = true;
+                while(waiting) {
+                    if (yelpsearch2 != null) {
+                        // move to the searchResultFragment when the button is clicked
+                        SearchResultFragment.changeText(yelpsearch2);
+                        vp.setCurrentItem(2);
+                        waiting = false;
+                    }
+                }
             }
         });
         return view;
@@ -47,9 +49,7 @@ public class SearchFragment extends Fragment {
     public void searchYelp()
     {
         Thread myThread = new Thread() {
-
             @Override
-
             public void run() {
 
                 yelpsearch2 = getSearch();
@@ -61,6 +61,7 @@ public class SearchFragment extends Fragment {
     public String getSearch(){
 
         /*
+        // This code is wrong and not working but it gives the general idea
         ParseQuery query = ParseUser.getQuery();
         query.getInBackground(String.valueOf(new GetCallback<ParseUser>() {
             @Override
@@ -80,7 +81,6 @@ public class SearchFragment extends Fragment {
         searching = run.start("Restaurant",37.3382,-121.8863);
         //searching = new RunMe().start("Restaurant", geoPoint.getLatitude(), geoPoint.getLongitude());
         return searching;
-
-
-        }
     }
+
+}

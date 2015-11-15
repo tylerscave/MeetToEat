@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:id="@+id/fragment_search"
+    android:id="@+id/fragment_searchresult"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="@drawable/what_to_eat"
     >
 
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:autoLink="web"/>
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:gravity="center|center"
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/btn_search"
-            android:background="@android:color/transparent"
+            android:id="@+id/btn_send"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:gravity="top|center"
-            android:text="Push the '?' for a Random Place to Eat" />
+            android:layout_height="wrap_content"
+            android:text="Click to send results to other group members" />
     </LinearLayout>
 
 </LinearLayout>

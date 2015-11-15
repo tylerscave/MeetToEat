@@ -97,6 +97,8 @@ public class ProfileActivity extends Activity {
         ParseGeoPoint geoPoint = new ParseGeoPoint(latitude,longitude);
         currentUser.put("userLocation", geoPoint);
         currentUser.saveInBackground();
+
+        //test to see if location is captured delete later
         System.out.println("location = " + latitude + " " + longitude);
 
     }
