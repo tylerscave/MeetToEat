@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 /**
  * Created by lord_tyler on 11/3/15.
@@ -27,6 +28,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search,
                 container, false);
         Button searchButton = (Button) view.findViewById(R.id.btn_search);
+        getGeo(); // set geoPoint
         vp = (ViewPager) getActivity().findViewById(R.id.viewpager);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +79,15 @@ public class SearchFragment extends Fragment {
 
 
         RunMe run = new RunMe();
-        String searching;
-        searching = run.start("Restaurant",37.3382,-121.8863);
-        //searching = new RunMe().start("Restaurant", geoPoint.getLatitude(), geoPoint.getLongitude());
+        //String searching = run.start("Restaurant",37.3382,-121.8863);
+        String searching = new RunMe().start("Restaurant", geoPoint.getLatitude(), geoPoint.getLongitude());
         return searching;
+    }
+
+    public void getGeo()
+    {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        geoPoint = currentUser.getParseGeoPoint("userLocation");
     }
 
 }
