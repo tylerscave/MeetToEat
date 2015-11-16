@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/stephencheung/Documents/StephenSTBS/STBScs151/ParseUI-Login/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/stephencheung/Documents/StephenSTBS/STBScs151/ParseUI-Login/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/lord_tyler/AndroidStudioProjects/MeetToEat/ParseUI-Login/src/main/assets"/></dataSet><dataSet config="release"><source path="/home/lord_tyler/AndroidStudioProjects/MeetToEat/ParseUI-Login/src/release/assets"/></dataSet></merger>
