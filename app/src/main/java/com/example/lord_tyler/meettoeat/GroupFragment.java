@@ -27,39 +27,82 @@ public class GroupFragment extends Fragment {
     List<String> groups;//contains ObjectIDs of all groups current user is part of
     List<String> users;//Contains Strings of all users in a given group
     ParseUser currentUser = ParseUser.getCurrentUser();
-    String group1Text;
+    String groupText;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group, container, false);
+        view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Yes");
+            }
+        });
         // Inflate the layout for this fragment
         if (currentUser != null) {
+            //Adding listeners to each textview
             TextView testView = (TextView) view.findViewById(R.id.textView);
             testView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Put the pass into group based on position in the arrayList
+                    System.out.println("First Group Selected");
+                    if(groups != null){
+                        System.out.println(groups.get(0));
+                    }
                 }
             });
-            group1Text = "";
+            view.findViewById(R.id.textView2).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("Second Group Selected");
+                    if(groups.size() >= 2){
+                        System.out.println(groups.get(1));
+                    }
+                }
+            });
+            view.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                System.out.println("Third Group Selected");
+                    if(groups.size() >= 3){
+                        System.out.println(groups.get(2));
+                    }
+                }
+            });
+            view.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                System.out.println("Fourth Group Selected");
+                    if(groups.size() >= 4){
+                        System.out.println(groups.get(3));
+                    }
+                }
+            });
+
+            groupText = "";
+            ParseQuery<ParseObject> query = null;
             groups = currentUser.getList("groups");
             users = new ArrayList<String>();
             if (groups != null) {
-                System.out.println(groups.get(0));//Test Line
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");//TODO Add check for if the ParseObject is null because it does not match
-                try {
-                    ParseObject obj = query.get(groups.get(0));
-                    if (obj == null) System.out.println("Couldn't find the group");
-                    else {
-                        ArrayList tmp = (ArrayList) obj.getList("users"); //TODO This would only work if part of one group, need to make it a list
-                        for (Object s : tmp) {
-                            users.add(s.toString());
+                for (String g : groups) {
+                    System.out.println(g);//Test Line
+
+                    query = ParseQuery.getQuery("Group");//TODO Add check for if the ParseObject is null because it does not match
+                    try {
+                        ParseObject obj = query.get(g);
+                        if (obj == null) System.out.println("Couldn't find the group");
+                        else {
+                            ArrayList tmp = (ArrayList) obj.getList("users"); //TODO This would only work if part of one group, need to make it a list
+                            for (Object s : tmp) {
+                                users.add(s.toString());
+                            }
                         }
+                    } catch (Exception e) {
+                        System.out.println("Something Went Wrong");
                     }
-                } catch (Exception e) {
-                    System.out.println("Something Went Wrong");
                 }
 
 
@@ -83,24 +126,21 @@ public class GroupFragment extends Fragment {
                     try {
                         ParseObject obj = query2.get(u);
                         System.out.println("Name 1 " + obj.get("name"));
-                        group1Text += obj.get("name");
-                        group1Text += ", ";
+                        groupText += obj.get("name");
+                        groupText += ", ";
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
-                group1Text = group1Text.substring(0, group1Text.length() - 2);
-                System.out.println("GroupText " + group1Text);
-                testView.setText(group1Text);
+                groupText = groupText.substring(0, groupText.length() - 2);
+                System.out.println("GroupText " + groupText);
+                testView.setText(groupText);
+                groupText = "";
             } else System.out.println("No Valid Group");//TODO Add to UI
         } else System.out.println("No Valid User");//TODO Add to UI
 
 
         return view;
-    }
-
-    public void addGroup(View v){
-        System.out.println("Pressing add group");
     }
 
 
