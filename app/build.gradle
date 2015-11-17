@@ -42,4 +42,8 @@ dependencies {
     compile files('/home/lord_tyler/AndroidStudioProjects/MeetToEat/libs/gson-1.6.jar')
     compile files('/home/lord_tyler/AndroidStudioProjects/MeetToEat/libs/commons-logging-1.1.1.jar')
     compile files('/home/lord_tyler/AndroidStudioProjects/MeetToEat/libs/scribe-1.1.0.jar')
+    compile files('E:/Users/Benji/Desktop/STBScs151/libs/commons-logging-1.1.1.jar')
+    compile files('E:/Users/Benji/Desktop/STBScs151/libs/gson-1.6.jar')
+    compile files('E:/Users/Benji/Desktop/STBScs151/libs/httpmime-4.0.3.jar')
+    compile files('E:/Users/Benji/Desktop/STBScs151/libs/scribe-1.1.0.jar')
 }

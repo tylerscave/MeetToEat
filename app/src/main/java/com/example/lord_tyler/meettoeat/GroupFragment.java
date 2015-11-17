@@ -1,8 +1,13 @@
 package com.example.lord_tyler.meettoeat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,6 +37,12 @@ public class GroupFragment extends Fragment {
         // Inflate the layout for this fragment
         if (currentUser != null) {
             TextView testView = (TextView) view.findViewById(R.id.textView);
+            testView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Put the pass into group based on position in the arrayList
+                }
+            });
             group1Text = "";
             groups = currentUser.getList("groups");
             users = new ArrayList<String>();
@@ -86,6 +97,10 @@ public class GroupFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void addGroup(View v){
+        System.out.println("Pressing add group");
     }
 
 

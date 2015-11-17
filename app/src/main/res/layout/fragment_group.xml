@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Group"
+        android:id="@+id/addButton"
+        android:layout_gravity="right"
+        android:onClick="addGroup" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,6 +34,7 @@
                 android:text="Large Text"
                 android:id="@+id/textView"
                 android:editable="false" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -74,6 +83,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/textView4" />
+
         </LinearLayout>
     </LinearLayout>
 
