@@ -10,7 +10,11 @@ import android.widget.Button;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lord_tyler on 11/3/15.
@@ -20,6 +24,9 @@ public class SearchFragment extends Fragment {
     private static String yelpsearch2;
     private ParseGeoPoint geoPoint;
     private ViewPager vp;
+    private ParseObject group;
+    private double latitude;
+    private double longitude;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,14 +87,37 @@ public class SearchFragment extends Fragment {
 
         RunMe run = new RunMe();
         //String searching = run.start("Restaurant",37.3382,-121.8863);
-        String searching = new RunMe().start("Restaurant", geoPoint.getLatitude(), geoPoint.getLongitude());
+        String searching = new RunMe().start("Restaurant", latitude, longitude);
         return searching;
     }
 
-    public void getGeo()
+    public void getGeo() //Only the current user so far
     {
         ParseUser currentUser = ParseUser.getCurrentUser();
         geoPoint = currentUser.getParseGeoPoint("userLocation");
+
+        if (group != null)
+        {
+            List<ParseUser> groupmembers = group.getList("users");
+            for (ParseUser user: groupmembers)
+            {
+                latitude += user.getParseGeoPoint("userLocation").getLatitude();
+                longitude += user.getParseGeoPoint("userLocation").getLongitude();
+            }
+            latitude = latitude / groupmembers.size();
+            longitude = longitude / groupmembers.size();
+        }
+        else
+        {
+            latitude = geoPoint.getLatitude();
+            longitude = geoPoint.getLongitude();
+        }
+
+    }
+
+    public void setGroup(ParseObject group)
+    {
+        this.group = group;
     }
 
 }
