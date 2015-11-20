@@ -1,6 +1,7 @@
 package com.example.lord_tyler.meettoeat;
 
 import android.content.Intent;
+import android.nfc.tech.NfcBarcode;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -49,8 +50,14 @@ public class GroupFragment extends Fragment {
                 public void onClick(View v) {
                     //Put the pass into group based on position in the arrayList
                     System.out.println("First Group Selected");
-                    if(groups != null){
+                    if (groups != null) {
                         System.out.println(groups.get(0));
+                        try {
+                            ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
+                            SearchFragment.setGroup(getGroup.get(groups.get(1)));
+                        } catch (Exception e) {
+
+                        }
                     }
                 }
             });
@@ -58,8 +65,14 @@ public class GroupFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     System.out.println("Second Group Selected");
-                    if(groups.size() >= 2){
+                    if (groups.size() >= 2) {
                         System.out.println(groups.get(1));
+                        try {
+                            ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
+                            SearchFragment.setGroup(getGroup.get(groups.get(1)));
+                        } catch (Exception e) {
+
+                        }
                     }
                 }
             });

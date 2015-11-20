@@ -24,7 +24,7 @@ public class SearchFragment extends Fragment {
     private static String yelpsearch2;
     private ParseGeoPoint geoPoint;
     private ViewPager vp;
-    private ParseObject group;
+    private static ParseObject group; //Find way to pass value without using static
     private double latitude;
     private double longitude;
 
@@ -115,9 +115,9 @@ public class SearchFragment extends Fragment {
 
     }
 
-    public void setGroup(ParseObject group)
+    public static void setGroup(ParseObject g)
     {
-        this.group = group;
-    }
+        group = g;
+    }//Should change the implementation so that we don't have to use static
 
 }
