@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -35,16 +38,17 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search,
                 container, false);
         Button searchButton = (Button) view.findViewById(R.id.btn_search);
-        getGeo(); // set geoPoint
         vp = (ViewPager) getActivity().findViewById(R.id.viewpager);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getGeo(); // set geoPoint
                 searchYelp();
                 boolean waiting = true;
-                while(waiting) {
+                while (waiting) {
                     if (yelpsearch2 != null) {
                         // move to the searchResultFragment when the button is clicked
+                        SearchResultFragment.setGroup(group);
                         SearchResultFragment.changeText(yelpsearch2);
                         vp.setCurrentItem(2);
                         waiting = false;
@@ -69,43 +73,38 @@ public class SearchFragment extends Fragment {
 
     public String getSearch(){
 
-        /*
-        // This code is wrong and not working but it gives the general idea
-        ParseQuery query = ParseUser.getQuery();
-        query.getInBackground(String.valueOf(new GetCallback<ParseUser>() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e == null) {
-                    geoPoint = user.getParseGeoPoint("userLocation");
-                } else
-                    Log.d("userLocation", e.getMessage());
-            }
-        }));
-        System.out.println("geoPoint latitude = " + geoPoint.getLatitude());
-        */
-
-
         RunMe run = new RunMe();
         //String searching = run.start("Restaurant",37.3382,-121.8863);
         String searching = new RunMe().start("Restaurant", latitude, longitude);
         return searching;
     }
 
-    public void getGeo() //Only the current user so far
+    public void getGeo()
     {
+        double templat = 0;
+        double templong = 0;
+        ParseQuery user = ParseUser.getQuery();
         ParseUser currentUser = ParseUser.getCurrentUser();
         geoPoint = currentUser.getParseGeoPoint("userLocation");
-
+        System.out.println("SEARCH GROUP");
         if (group != null)
         {
-            List<ParseUser> groupmembers = group.getList("users");
-            for (ParseUser user: groupmembers)
+            List<String> groupmembers = group.getList("users");
+
+            for (String member: groupmembers)
             {
-                latitude += user.getParseGeoPoint("userLocation").getLatitude();
-                longitude += user.getParseGeoPoint("userLocation").getLongitude();
+                try {
+                    ParseObject mUser = user.get(member);
+                    templat += mUser.getParseGeoPoint("userLocation").getLatitude();
+                    templong += mUser.getParseGeoPoint("userLocation").getLongitude();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-            latitude = latitude / groupmembers.size();
-            longitude = longitude / groupmembers.size();
+            latitude = templat / groupmembers.size();
+            System.out.println(currentUser.getUsername() + latitude);
+            longitude = templong / groupmembers.size();
+            System.out.println(currentUser.getUsername() + longitude);
         }
         else
         {
@@ -118,6 +117,6 @@ public class SearchFragment extends Fragment {
     public static void setGroup(ParseObject g)
     {
         group = g;
-    }//Should change the implementation so that we don't have to use static
+    }
 
 }

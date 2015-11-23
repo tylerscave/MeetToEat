@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+
 /**
  * Created by lord_tyler on 11/3/15.
  */
 public class SearchResultFragment extends Fragment {
     private static TextView textView;
     private static Button sendResultButton;
+    private static ParseObject group;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +43,11 @@ public class SearchResultFragment extends Fragment {
             }
         });
 
+    }
+
+    public static void setGroup(ParseObject g)
+    {
+        group = g;
     }
 
     

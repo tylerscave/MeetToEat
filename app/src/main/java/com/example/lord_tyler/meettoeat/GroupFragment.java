@@ -1,9 +1,12 @@
 package com.example.lord_tyler.meettoeat;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.nfc.tech.NfcBarcode;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.method.KeyListener;
 import android.view.KeyEvent;
@@ -29,6 +32,7 @@ public class GroupFragment extends Fragment {
     List<String> users;//Contains Strings of all users in a given group
     ParseUser currentUser = ParseUser.getCurrentUser();
     String groupText;
+    ViewPager vp;
 
 
     @Override
@@ -45,6 +49,7 @@ public class GroupFragment extends Fragment {
         if (currentUser != null) {
             //Adding listeners to each textview
             TextView testView = (TextView) view.findViewById(R.id.textView);
+            vp = (ViewPager) getActivity().findViewById(R.id.viewpager); //test sc
             testView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -54,11 +59,14 @@ public class GroupFragment extends Fragment {
                         System.out.println(groups.get(0));
                         try {
                             ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
-                            SearchFragment.setGroup(getGroup.get(groups.get(1)));
-                        } catch (Exception e) {
+                            SearchFragment.setGroup(getGroup.get(groups.get(0)));
+                            System.out.println("GF " + groups.get(0));
 
+                        } catch (Exception e) {
+                            System.out.println("CATCH BLOCK");
                         }
                     }
+                    vp.setCurrentItem(1);
                 }
             });
             view.findViewById(R.id.textView2).setOnClickListener(new View.OnClickListener() {
