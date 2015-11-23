@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by lord_tyler on 11/3/15.
@@ -32,15 +34,27 @@ public class SearchResultFragment extends Fragment {
         return view;
     }
 
-    public static void changeText(String result) {
+    public static void changeText(final String result) {
         textView.setText(result);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         sendResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo put the result onto parse for other members of the group to access
-            }
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+                query.getInBackground(group.getObjectId(), new GetCallback<ParseObject>() {
+
+                    @Override
+                    public void done(ParseObject object, com.parse.ParseException e) {
+                        if (e == null) {
+                            group.put("YelpLocation",result);
+                            group.saveInBackground();
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });            }
         });
 
     }
