@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment {
                         // move to the searchResultFragment when the button is clicked
                         SearchResultFragment.setGroup(group);
                         SearchResultFragment.changeText(yelpsearch2);
+                        group = null;
                         vp.setCurrentItem(2);
                         waiting = false;
                     }
@@ -102,9 +103,9 @@ public class SearchFragment extends Fragment {
                 }
             }
             latitude = templat / groupmembers.size();
-            System.out.println(currentUser.getUsername() + latitude);
+            System.out.println("Final " + latitude);
             longitude = templong / groupmembers.size();
-            System.out.println(currentUser.getUsername() + longitude);
+            System.out.println("Final " + longitude);
         }
         else
         {
