@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
@@ -48,7 +50,7 @@ public class GroupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Enter Emails");
+                builder.setTitle("Enter UserName");
                 final EditText inputText = new EditText(getContext());
                 builder.setView(inputText);
                 builder.setNegativeButton("ADD", new DialogInterface.OnClickListener() {
@@ -56,16 +58,33 @@ public class GroupFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                         String input = inputText.getText().toString();
-                        if(input != null){
+                        if (input != null) {
                             System.out.println(input);//TODO COMMENT THIS TEST LINE OUT
                             ParseObject newGroup = new ParseObject("Group");
-                            newGroup.add("users", input);
+                            ParseUser matchedUser = null;
+                            //Change the input of the email into the corresponding user ID
+                            ParseQuery getUsers = ParseUser.getQuery();
+                            getUsers = getUsers.whereMatches("username", input);
+                            try {
+                                matchedUser = (ParseUser) getUsers.getFirst();
+                                matchedUser.add("groups", newGroup.getObjectId());
+                                //matchedUser.save(); //TODO DON'T HAVE PERMISSIONS TO SAVE CHANGES TO USER, WOULD HAVE USE CLOUD FUNCTION AND MASTERKEY
+                            } catch (ParseException e) {
+                                System.out.println("Something wrong with user search");
+                            }
+
+                            newGroup.add("users", matchedUser.getObjectId());
                             try {
                                 newGroup.save();
                             } catch (ParseException e) {
                                 System.out.println("Couldn't Save");
                             }
-
+                            ParseUser.getCurrentUser().add("groups", newGroup.getObjectId());
+                            try {
+                                ParseUser.getCurrentUser().save();
+                            } catch (ParseException e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
                     }
                 });
