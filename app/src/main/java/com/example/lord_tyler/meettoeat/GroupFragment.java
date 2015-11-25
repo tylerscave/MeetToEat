@@ -16,9 +16,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -46,10 +49,24 @@ public class GroupFragment extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Enter Emails");
-                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                final EditText inputText = new EditText(getContext());
+                builder.setView(inputText);
+                builder.setNegativeButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+                        String input = inputText.getText().toString();
+                        if(input != null){
+                            System.out.println(input);//TODO COMMENT THIS TEST LINE OUT
+                            ParseObject newGroup = new ParseObject("Group");
+                            newGroup.add("users", input);
+                            try {
+                                newGroup.save();
+                            } catch (ParseException e) {
+                                System.out.println("Couldn't Save");
+                            }
+
+                        }
                     }
                 });
                 builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
