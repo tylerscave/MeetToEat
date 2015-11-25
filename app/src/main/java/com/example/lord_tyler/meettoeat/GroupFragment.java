@@ -1,7 +1,9 @@
 package com.example.lord_tyler.meettoeat;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.tech.NfcBarcode;
 import android.os.Bundle;
@@ -42,7 +44,21 @@ public class GroupFragment extends Fragment {
         view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Yes");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Enter Emails");
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
             }
         });
         // Inflate the layout for this fragment
@@ -126,17 +142,6 @@ public class GroupFragment extends Fragment {
                     }
                 }
 
-
-                    /*@Override
-                    public void done(ParseObject object, ParseException e) {
-                        if (e != null) {
-                            ;//TODO Need to add to UI
-                        } else {
-                            ArrayList tmp = (ArrayList) object.getList("users"); //TODO This would only work if part of one group, need to make it a list
-                            for (Object s : tmp) {
-                                users.add(s.toString());
-                            }
-                        }*/
 
                 ;//Depends on valid group, need to add failsafe as mentioned above if group doesn't exist on server
                 //Testing setting users to the group
