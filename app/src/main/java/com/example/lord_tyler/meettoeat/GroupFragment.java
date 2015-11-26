@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * Created by lord_tyler on 11/3/15.
- * Proto - functions added by Benjamin
+ * Fragment programmed by Benjamin Gottheil
  */
 public class GroupFragment extends Fragment {
     List<String> groups;//contains ObjectIDs of all groups current user is part of
@@ -46,6 +46,8 @@ public class GroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group, container, false);
+
+        //Creating add group button and its functionality
         view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +104,7 @@ public class GroupFragment extends Fragment {
             //Adding listeners to each textview
             TextView testView = (TextView) view.findViewById(R.id.textView);
             vp = (ViewPager) getActivity().findViewById(R.id.viewpager); //test sc
+            //Setting TextView as buttons
             testView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -160,6 +163,7 @@ public class GroupFragment extends Fragment {
             groups = currentUser.getList("groups");
             users = new ArrayList<String>();
             if (groups != null) {
+                //g is a group ID
                 for (String g : groups) {
                     System.out.println(g);//Test Line
 
@@ -184,6 +188,7 @@ public class GroupFragment extends Fragment {
                 System.out.println("Out of loop" + users.get(0));
                 query.cancel();
                 ParseQuery query2 = ParseUser.getQuery();
+                //Cycle through users list. u is a user ID
                 for (String u : users) {
                     try {
                         ParseObject obj = query2.get(u);
