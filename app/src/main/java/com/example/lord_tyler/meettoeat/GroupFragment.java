@@ -64,7 +64,7 @@ public class GroupFragment extends Fragment {
                         dialog.cancel();
                         String input = inputText.getText().toString();
                         if (input != null) {
-                            System.out.println(input);//TODO COMMENT THIS TEST LINE OUT
+                           // System.out.println(input);//TODO COMMENT THIS TEST LINE OUT
                             ParseObject newGroup = new ParseObject("Group");
                             ParseUser matchedUser = null;
                             //Change the input of the email into the corresponding user ID
@@ -108,6 +108,7 @@ public class GroupFragment extends Fragment {
             TextView testView = (TextView) view.findViewById(R.id.textView);
             vp = (ViewPager) getActivity().findViewById(R.id.viewpager); //test sc
             //Setting TextView as buttons
+            //TODO ONLY THE FIRST 2 TEXTBOXES HAVE FUNCTIONS SET UP PROPERLY, TEXTBOX 3 AND 4 NEED WORK
             testView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,7 +171,7 @@ public class GroupFragment extends Fragment {
             if (groups != null) {
                 //g is a group ID
                 for (String g : groups) {
-                    System.out.println(g);//Test Line
+                    //System.out.println(g);//Test Line
 
                     query = ParseQuery.getQuery("Group");//TODO Add check for if the ParseObject is null because it does not match
                     try {
@@ -193,22 +194,23 @@ public class GroupFragment extends Fragment {
 
                 ;//Depends on valid group, need to add failsafe as mentioned above if group doesn't exist on server
                 //Testing setting users to the group
-                System.out.println("Out of loop" + users.get(0));
+                //System.out.println("Out of loop" + users.get(0));
                 query.cancel();
 
                 //Cycle through users list. u is a user ID
-                for (String u : users) {
+                //I don't believe the commented below is needed.
+                /*for (String u : users) {
                     try {
                         ParseObject obj = query2.get(u);
-                        System.out.println("Name 1 " + obj.get("name"));
+                        //System.out.println("Name 1 " + obj.get("name"));
                         groupText += obj.get("name");
                         groupText += ", ";
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                groupText = groupText.substring(0, groupText.length() - 2);
-                System.out.println("GroupText " + groupText);
+                }*/
+                if(groupText.length() > 3) groupText = groupText.substring(0, groupText.length() - 2);
+                //System.out.println("GroupText " + groupText);
                 //Ensures no out of bounds is thrown when populating the text boxes. If less than 4 groups, the other boxes will be given blank text
                 for(int x = textViewText.size(); x < 4; x++){
                     textViewText.add("");
