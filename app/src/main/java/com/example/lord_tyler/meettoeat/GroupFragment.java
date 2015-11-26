@@ -27,6 +27,8 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,7 @@ import java.util.List;
 public class GroupFragment extends Fragment {
     List<String> groups;//contains ObjectIDs of all groups current user is part of
     List<String> users;//Contains Strings of all users in a given group
+    List<String> textViewText;//Contains text for each of the textview boxes
     ParseUser currentUser = ParseUser.getCurrentUser();
     String groupText;
     ViewPager vp;
@@ -46,7 +49,7 @@ public class GroupFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group, container, false);
-
+        textViewText = new ArrayList<String>();
         //Creating add group button and its functionality
         view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +163,8 @@ public class GroupFragment extends Fragment {
 
             groupText = "";
             ParseQuery<ParseObject> query = null;
+            ParseQuery query2 = ParseUser.getQuery();
+
             groups = currentUser.getList("groups");
             users = new ArrayList<String>();
             if (groups != null) {
@@ -175,7 +180,10 @@ public class GroupFragment extends Fragment {
                             ArrayList tmp = (ArrayList) obj.getList("users"); //TODO This would only work if part of one group, need to make it a list
                             for (Object s : tmp) {
                                 users.add(s.toString());
+                                groupText += query2.get(s.toString()).get("name") + ", ";
                             }
+                            textViewText.add(groupText.substring(0, groupText.length() - 2));
+                            groupText = "";
                         }
                     } catch (Exception e) {
                         System.out.println("Something Went Wrong");
@@ -187,7 +195,7 @@ public class GroupFragment extends Fragment {
                 //Testing setting users to the group
                 System.out.println("Out of loop" + users.get(0));
                 query.cancel();
-                ParseQuery query2 = ParseUser.getQuery();
+
                 //Cycle through users list. u is a user ID
                 for (String u : users) {
                     try {
@@ -201,7 +209,20 @@ public class GroupFragment extends Fragment {
                 }
                 groupText = groupText.substring(0, groupText.length() - 2);
                 System.out.println("GroupText " + groupText);
-                testView.setText(groupText);
+                //Ensures no out of bounds is thrown when populating the text boxes. If less than 4 groups, the other boxes will be given blank text
+                for(int x = textViewText.size(); x < 4; x++){
+                    textViewText.add("");
+                }
+
+                //Setting all the textbox's text
+                testView.setText(textViewText.get(0));
+                testView = (TextView) view.findViewById(R.id.textView2);
+                testView.setText(textViewText.get(1));
+                testView = (TextView) view.findViewById(R.id.textView3);
+                testView.setText(textViewText.get(2));
+                testView = (TextView) view.findViewById(R.id.textView4);
+                testView.setText(textViewText.get(3));
+
                 groupText = "";
             } else System.out.println("No Valid Group");//TODO Add to UI
         } else System.out.println("No Valid User");//TODO Add to UI
