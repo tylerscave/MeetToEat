@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseObject;
@@ -16,10 +17,11 @@ import com.parse.ParseQuery;
 /**
  * Created by lord_tyler on 11/3/15.
  */
-public class SearchResultFragment extends Fragment {
+public class SearchResultFragment extends Fragment implements View.OnClickListener {
     private static TextView textView;
     private static Button sendResultButton;
     private static ParseObject group;
+    private static String theResult = null;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,33 +32,34 @@ public class SearchResultFragment extends Fragment {
         textView = (TextView) view.findViewById(R.id.textViewResult);
         // set up button to send result to other users
         sendResultButton = (Button) view.findViewById(R.id.btn_send);
+        sendResultButton.setOnClickListener(this);
 
         return view;
     }
 
     public static void changeText(final String result) {
+        theResult = result;
         textView.setText(result);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
-        sendResultButton.setOnClickListener(new View.OnClickListener() {
+    public void onClick(View v) {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+        query.getInBackground(group.getObjectId(), new GetCallback<ParseObject>() {
+
             @Override
-            public void onClick(View v) {
-
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-                query.getInBackground(group.getObjectId(), new GetCallback<ParseObject>() {
-
-                    @Override
-                    public void done(ParseObject object, com.parse.ParseException e) {
-                        if (e == null) {
-                            group.put("YelpLocation",result);
-                            group.saveInBackground();
-                        } else {
-                            // something went wrong
-                        }
-                    }
-                });            }
+            public void done(ParseObject object, com.parse.ParseException e) {
+                if (e == null) {
+                    group.put("YelpLocation", theResult);
+                    group.saveInBackground();
+                    Toast.makeText(getActivity(), "Your search result was sent to your group",
+                                Toast.LENGTH_SHORT).show();
+                } else {
+                        // something went wrong
+                }
+            }
         });
-
     }
 
     public static void setGroup(ParseObject g)
