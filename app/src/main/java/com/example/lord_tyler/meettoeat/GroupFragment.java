@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -140,6 +141,7 @@ public class GroupFragment extends Fragment {
 
                         }
                     }
+                    vp.setCurrentItem(1); //Switches to SearchFragment
                 }
             });
             view.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
@@ -223,6 +225,41 @@ public class GroupFragment extends Fragment {
                 testView.setText(textViewText.get(2));
                 testView = (TextView) view.findViewById(R.id.textView4);
                 testView.setText(textViewText.get(3));
+
+                //Setting buttons to visible or invisible
+                if(textViewText.get(0).length() == 0) ((Button) view.findViewById(R.id.button)).setVisibility(View.INVISIBLE);
+                else{
+                    ((Button) view.findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ParseQuery<ParseObject> tmpQuery = ParseQuery.getQuery("Group");
+                            try {
+                                vp.setCurrentItem(2);
+                                SearchResultFragment.changeText(tmpQuery.get(groups.get(0)).get("YelpLocation").toString());
+                            } catch (Exception e) {
+                                System.out.print(e.getMessage());
+                            }
+                        }
+                    });
+                }
+                if(textViewText.get(1).length() == 0) ((Button) view.findViewById(R.id.button2)).setVisibility(View.INVISIBLE);
+                else{
+                    ((Button) view.findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ParseQuery<ParseObject> tmpQuery = ParseQuery.getQuery("Group");
+                            try {
+                                vp.setCurrentItem(2);
+                                SearchResultFragment.changeText(tmpQuery.get(groups.get(1)).get("YelpLocation").toString());
+                            } catch (Exception e) {
+                                System.out.print(e.getMessage());
+                            }
+                        }
+                    });
+                }
+                if(textViewText.get(2).length() == 0) ((Button) view.findViewById(R.id.button3)).setVisibility(View.INVISIBLE);
+                if(textViewText.get(3).length() == 0) ((Button) view.findViewById(R.id.button4)).setVisibility(View.INVISIBLE);
+
 
                 groupText = "";
             } else System.out.println("No Valid Group");//TODO Add to UI
