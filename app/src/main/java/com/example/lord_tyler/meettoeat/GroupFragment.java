@@ -60,13 +60,12 @@ public class GroupFragment extends Fragment {
                         try {
                             ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
                             SearchFragment.setGroup(getGroup.get(groups.get(0)));
-                            System.out.println("GF " + groups.get(0));
 
                         } catch (Exception e) {
                             System.out.println("CATCH BLOCK");
                         }
                     }
-                    vp.setCurrentItem(1);
+                    vp.setCurrentItem(1); //Switches to SearchFragment
                 }
             });
             view.findViewById(R.id.textView2).setOnClickListener(new View.OnClickListener() {

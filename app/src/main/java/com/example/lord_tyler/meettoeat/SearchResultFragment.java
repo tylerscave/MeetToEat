@@ -37,7 +37,10 @@ public class SearchResultFragment extends Fragment {
     public static void changeText(final String result) {
         textView.setText(result);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-
+        if (group == null)
+        {
+            sendResultButton.setVisibility(View.INVISIBLE);
+        }
         sendResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

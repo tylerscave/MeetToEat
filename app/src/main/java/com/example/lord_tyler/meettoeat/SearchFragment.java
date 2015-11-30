@@ -87,7 +87,6 @@ public class SearchFragment extends Fragment {
         ParseQuery user = ParseUser.getQuery();
         ParseUser currentUser = ParseUser.getCurrentUser();
         geoPoint = currentUser.getParseGeoPoint("userLocation");
-        System.out.println("SEARCH GROUP");
         if (group != null)
         {
             List<String> groupmembers = group.getList("users");
