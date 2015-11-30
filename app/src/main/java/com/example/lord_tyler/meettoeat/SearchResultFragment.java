@@ -65,6 +65,10 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
     public static void setGroup(ParseObject g)
     {
         group = g;
+        if (group == null)
+        {
+            sendResultButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     

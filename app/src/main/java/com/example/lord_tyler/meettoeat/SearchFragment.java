@@ -51,6 +51,7 @@ public class SearchFragment extends Fragment {
                         SearchResultFragment.setGroup(group);
                         SearchResultFragment.changeText(yelpsearch2);
                         group = null;
+                        yelpsearch2 = null;
                         vp.setCurrentItem(2);
                         waiting = false;
                     }
