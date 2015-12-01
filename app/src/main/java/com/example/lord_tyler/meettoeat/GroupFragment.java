@@ -79,7 +79,10 @@ public class GroupFragment extends Fragment {
                                 System.out.println("Something wrong with user search");
                             }
 
+                            //Add current user and one user selected to the group
+                            newGroup.add("users", currentUser.getObjectId());
                             newGroup.add("users", matchedUser.getObjectId());
+
                             try {
                                 newGroup.save();
                             } catch (ParseException e) {
