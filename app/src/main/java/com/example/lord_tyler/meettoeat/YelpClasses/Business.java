@@ -2,6 +2,10 @@ package com.example.lord_tyler.meettoeat.YelpClasses;
 
 import java.util.List;
 
+/**
+ * Parsed yelp raw data
+ * Created by stephencheung on 10/7/15.
+ */
 public class Business {
 	private String id;
 	private String name;

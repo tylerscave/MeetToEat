@@ -11,40 +11,46 @@ import org.scribe.oauth.OAuthService;
 
 import java.util.Random;
 
+/**
+ * Sends a request to Yelp for restaurants
+ * Randomize restaurants for the user
+ * Created by stephencheung on 10/7/15.
+ * Programmed by Stephen Cheung
+ */
 public class RunMe {
 
+	/**
+	 * Sends a request to yelp and randomize a restaurant
+	 * @param category type of search
+	 * @param lat latitude to search
+	 * @param lng longitude to search
+	 * @return the randomized restaurant
+	 */
 	public String start(String category, Double lat, Double lng) {
-		// Define your keys, tokens and secrets.  These are available from the Yelp website.
+
 		API_Static_Stuff key = new API_Static_Stuff();
 		String CONSUMER_KEY = key.getYelpConsumerKey();
 		String CONSUMER_SECRET = key.getYelpConsumerSecret();
 		String TOKEN = key.getYelpToken();
 		String TOKEN_SECRET = key.getYelpTokenSecret();
 		String result = "";
-		
-		// Some example values to pass into the Yelp search service.  
-		//String lat = "30.361471";
-		//String lng = "-87.164326";
-		//String category = "KBBQ";
-		//String location = "San Jose";
-		
-		// Execute a signed call to the Yelp service.  
+
+		// Execute a call to the Yelp service.
 		OAuthService service = new ServiceBuilder().provider(YelpV2API.class).apiKey(CONSUMER_KEY).apiSecret(CONSUMER_SECRET).build();
 		Token accessToken = new Token(TOKEN, TOKEN_SECRET);
 		OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search");
 		request.addQuerystringParameter("ll", lat + "," + lng);
 		request.addQuerystringParameter("term", category);
-		//request.addQuerystringParameter("location", location);
 		service.signRequest(accessToken, request);
 		Response response = request.send();
-		String rawData = response.getBody();
+		String rawData = response.getBody(); // Data retrieved from yelp to be parsed
 		 
-		// Sample of how to turn that text into Java objects.  
 		try {
 			YelpSearchResult places = new Gson().fromJson(rawData, YelpSearchResult.class);
 			
 			System.out.println();
 
+			// Randomize all the searched restaurants (first 20 restaurants)
 			Random rand = new Random();
 			int store = 0;
 			if (places.getBusinesses().size() < 20)

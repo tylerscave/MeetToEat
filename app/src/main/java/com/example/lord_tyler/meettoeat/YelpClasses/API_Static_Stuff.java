@@ -1,7 +1,9 @@
 package com.example.lord_tyler.meettoeat.YelpClasses;
 
 /**
+ * Sets the access keys for Yelp
  * Created by stephencheung on 10/7/15.
+ * Programmed by Stephen Cheung
  */
 public class API_Static_Stuff {
     private final String YELP_CONSUMER_KEY ="ShwF7ALLuZZvMhKMF0n_lw";

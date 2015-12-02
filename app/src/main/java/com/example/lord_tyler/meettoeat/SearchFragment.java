@@ -20,16 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * New fragment for searching for restaurant through yelps database.
+ * Gathers the latitude and longitude of each group member to find a central geopoint
+ * Randomizes a restaurant based on the area of the central geopint
  * Created by lord_tyler on 11/3/15.
+ * Fragment programmed by Stephen Cheung
  */
 public class SearchFragment extends Fragment {
 
-    private static String yelpsearch2;
-    private ParseGeoPoint geoPoint;
-    private ViewPager vp;
-    private static ParseObject group; //Find way to pass value without using static
-    private double latitude;
-    private double longitude;
+    private static String yelpsearch2; // Result of the yelp search
+    private ParseGeoPoint geoPoint; //geopoint of the central location
+    private ViewPager vp; //
+    private static ParseObject group; //group selected
+    private double latitude; //central latitude
+    private double longitude; //central longitude
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,10 +43,11 @@ public class SearchFragment extends Fragment {
                 container, false);
         Button searchButton = (Button) view.findViewById(R.id.btn_search);
         vp = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        // Sets button to search when clicked
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGeo(); // set geoPoint
+                getGeo(); // sets geoPoint
                 searchYelp();
                 boolean waiting = true;
                 while (waiting) {
@@ -61,6 +66,10 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Creates a new thread to send query to yelp
+     * Method programmed by Stephen Cheung
+     */
     public void searchYelp()
     {
         Thread myThread = new Thread() {
@@ -73,14 +82,22 @@ public class SearchFragment extends Fragment {
         myThread.start();
     }
 
+    /**
+     * Sends a query to yelp for restaurant based on central latitude and longitude
+     * @return restaurant name,address, and yelp link
+     * Method programmed by Stephen Cheung
+     */
     public String getSearch(){
 
         RunMe run = new RunMe();
-        //String searching = run.start("Restaurant",37.3382,-121.8863);
         String searching = new RunMe().start("Restaurant", latitude, longitude);
         return searching;
     }
 
+    /**
+     * Sets the central latitude and longitude of the group, or individual
+     * Method programmed by Stephen Cheung
+     */
     public void getGeo()
     {
         double templat = 0;
@@ -90,22 +107,22 @@ public class SearchFragment extends Fragment {
         geoPoint = currentUser.getParseGeoPoint("userLocation");
         if (group != null)
         {
-            List<String> groupmembers = group.getList("users");
+            List<String> groupmembers = group.getList("users"); //gets arrays of all group members
 
-            for (String member: groupmembers)
+            for (String member: groupmembers) //loop through each group member
             {
                 try {
-                    ParseObject mUser = user.get(member);
-                    templat += mUser.getParseGeoPoint("userLocation").getLatitude();
-                    templong += mUser.getParseGeoPoint("userLocation").getLongitude();
+                    ParseObject mUser = user.get(member); // a member of the group
+                    templat += mUser.getParseGeoPoint("userLocation").getLatitude(); // latitude of group member
+                    templong += mUser.getParseGeoPoint("userLocation").getLongitude(); // longitude of group member
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
-            latitude = templat / groupmembers.size();
+            latitude = templat / groupmembers.size(); //averages central latitude
             System.out.println("Final " + latitude);
             longitude = templong / groupmembers.size();
-            System.out.println("Final " + longitude);
+            System.out.println("Final " + longitude); //averages central longitude
         }
         else
         {
@@ -115,6 +132,11 @@ public class SearchFragment extends Fragment {
 
     }
 
+    /**
+     * Sets the group selected
+     * @param g the group to be selected
+     * Method programmed by Stephen Cheung
+     */
     public static void setGroup(ParseObject g)
     {
         group = g;
