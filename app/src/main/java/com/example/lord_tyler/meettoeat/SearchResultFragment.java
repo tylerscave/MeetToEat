@@ -43,6 +43,11 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+    /**
+     * Send restaurant result to parse
+     * @param v
+     * Method Programmed By Shubaan Taheri
+     */
     public void onClick(View v) {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
