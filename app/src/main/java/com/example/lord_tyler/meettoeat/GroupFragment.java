@@ -46,7 +46,13 @@ public class GroupFragment extends Fragment {
     String groupText;
     ViewPager vp;
 
-
+    /**
+     * Creates and sets to load all groups into the groupfragment view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,8 +126,10 @@ public class GroupFragment extends Fragment {
         return view;
     }
 
+
     /**
-     * Populates the groupFragment. All hardcoded
+     * Populates the GroupFragment with corresponding groups
+     * @param view takes the view of the current fragment to modify
      */
     private void populateLayout(View view){
         if (currentUser != null) {
