@@ -15,11 +15,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 /**
- *COPYRIGHT (C) 2015 Tyler Jones and Shubaan Taheri. All Rights Reserved.
+ *COPYRIGHT (C) 2015 Shubaan Taheri. All Rights Reserved.
  * The SearchResultsFragment class is responsible for displaying search results and sending
  * those results to the rest of any group that has been selected
  * Solves CS151-05 Group Project MeetToEat
- * @author Tyler Jones and Shubaan Taheri
+ * @author Shubaan Taheri
  * @version 1.01 12/08/2015
  */
 public class SearchResultFragment extends Fragment implements View.OnClickListener {

@@ -1,39 +1,32 @@
 package com.example.lord_tyler.meettoeat;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.nfc.tech.NfcBarcode;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.text.method.KeyListener;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.Parse;
-import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * GroupFragment is responsible for all tasks involving creating and using groups
+ * Solves CS151-05 Group Project MeetToEat
+ * @author Benjamin Gottheil
+ * @version 1.01 12/08/2015
+ */
 /**
  * Created by lord_tyler on 11/3/15.
  * Fragment programmed by Benjamin Gottheil
