@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * New fragment for searching for restaurant through yelps database.
  * Gathers the latitude and longitude of each group member to find a central geopoint
- * Randomizes a restaurant based on the area of the central geopint
+ * Randomizes a restaurant based on the area of the central geopoint
  * Created by lord_tyler on 11/3/15.
  * Fragment programmed by Stephen Cheung
  */
