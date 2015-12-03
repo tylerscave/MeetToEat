@@ -30,6 +30,7 @@ import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class GroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_group, container, false);
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
         textViewText = new ArrayList<String>();
         //Creating add group button and its functionality
         view.findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
@@ -78,9 +79,17 @@ public class GroupFragment extends Fragment {
                                 System.out.println("Something wrong with user search");
                             }
 
-                            //Add current user and one user selected to the group
-                            newGroup.add("users", currentUser.getObjectId());
-                            newGroup.add("users", matchedUser.getObjectId());
+                            //Add current user and one user selected to the group through Reflection
+                            try {
+                                Method add = newGroup.getClass().getMethod("add", String.class, Object.class);
+                                add.invoke(newGroup, "users", currentUser.getObjectId());
+                                add.invoke(newGroup, "users", matchedUser.getObjectId());
+                            } catch (Exception e) {
+                                newGroup.add("users", currentUser.getObjectId());
+                                newGroup.add("users", matchedUser.getObjectId());
+                                System.out.println("Reflection did not work: " + e.getMessage());
+                            }
+
 
                             try {
                                 newGroup.save();
@@ -215,10 +224,9 @@ public class GroupFragment extends Fragment {
                             groupText = "";
                         }
                     } catch (Exception e) {
-                        System.out.println("Something Went Wrong");
+                        System.out.println("Something Went Wrong: " + e.getMessage());
                     }
                 }
-
 
                 query.cancel();
 
