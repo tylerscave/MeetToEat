@@ -9,22 +9,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * New fragment for searching for restaurant through yelps database.
  * Gathers the latitude and longitude of each group member to find a central geopoint
  * Randomizes a restaurant based on the area of the central geopint
- * Created by lord_tyler on 11/3/15.
- * Fragment programmed by Stephen Cheung
+ * Solves CS151-05 Group Project MeetToEat
+ * @author Stephen Cheung
+ * @version 1.01 12/08/2015
  */
 public class SearchFragment extends Fragment {
 
