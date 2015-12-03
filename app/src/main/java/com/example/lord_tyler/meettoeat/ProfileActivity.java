@@ -98,8 +98,14 @@ public class ProfileActivity extends Activity {
             LocationActivity.LocationResult locationResult = new LocationActivity.LocationResult() {
                 @Override
                 public void gotLocation(Location location) {
-                    latitude = location.getLatitude();
-                    longitude = location.getLongitude();
+                    try{
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }catch (Exception e){
+                        latitude = 37.00;
+                        longitude = -121.00;
+                    }
+
                 }
             };
             myLocation.getLocation(this, locationResult);
