@@ -67,6 +67,11 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         });
     }
 
+    /**
+     * Sets group selected
+     * @param g group selected
+     * Method Programmed By Shubaan Taheri
+     */
     public static void setGroup(ParseObject g)
     {
         group = g;
