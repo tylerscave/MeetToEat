@@ -30,6 +30,7 @@ import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,6 @@ public class GroupFragment extends Fragment {
                         dialog.cancel();
                         String input = inputText.getText().toString();
                         if (input != null) {
-                           // System.out.println(input);//TODO COMMENT THIS TEST LINE OUT
                             ParseObject newGroup = new ParseObject("Group");
                             ParseUser matchedUser = null;
                             //Change the input of the email into the corresponding user ID
@@ -79,9 +79,17 @@ public class GroupFragment extends Fragment {
                                 System.out.println("Something wrong with user search");
                             }
 
-                            //Add current user and one user selected to the group
-                            newGroup.add("users", currentUser.getObjectId());
-                            newGroup.add("users", matchedUser.getObjectId());
+                            //Add current user and one user selected to the group through Reflection
+                            try {
+                                Method add = newGroup.getClass().getMethod("add", String.class, Object.class);
+                                add.invoke(newGroup, "users", currentUser.getObjectId());
+                                add.invoke(newGroup, "users", matchedUser.getObjectId());
+                            } catch (Exception e) {
+                                newGroup.add("users", currentUser.getObjectId());
+                                newGroup.add("users", matchedUser.getObjectId());
+                                System.out.println("Reflection did not work: " + e.getMessage());
+                            }
+
 
                             try {
                                 newGroup.save();
@@ -106,13 +114,24 @@ public class GroupFragment extends Fragment {
                 builder.show();
             }
         });
-        // Inflate the layout for this fragment
+
+       this.populateLayout(view);
+
+        return view;
+    }
+
+    /**
+     * Populates the groupFragment. All hardcoded
+     */
+    private void populateLayout(View view){
         if (currentUser != null) {
+            groups = new ArrayList<String>();
+            users = new ArrayList<String>();
+            textViewText = new ArrayList<String>();
             //Adding listeners to each textview
             TextView testView = (TextView) view.findViewById(R.id.textView);
             vp = (ViewPager) getActivity().findViewById(R.id.viewpager); //test sc
             //Setting TextView as buttons
-            //TODO ONLY THE FIRST 2 TEXTBOXES HAVE FUNCTIONS SET UP PROPERLY, TEXTBOX 3 AND 4 NEED WORK
             testView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,19 +169,33 @@ public class GroupFragment extends Fragment {
             view.findViewById(R.id.textView3).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                System.out.println("Third Group Selected");
-                    if(groups.size() >= 3){
-                        System.out.println(groups.get(2));
+                    System.out.println("Third Group Selected");
+                    if (groups.size() >= 2) {
+                        System.out.println(groups.get(1));
+                        try {
+                            ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
+                            SearchFragment.setGroup(getGroup.get(groups.get(2)));
+                        } catch (Exception e) {
+
+                        }
                     }
+                    vp.setCurrentItem(1); //Switches to SearchFragment
                 }
             });
             view.findViewById(R.id.textView4).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                System.out.println("Fourth Group Selected");
-                    if(groups.size() >= 4){
-                        System.out.println(groups.get(3));
+                    System.out.println("Fourth Group Selected");
+                    if (groups.size() >= 3) {
+                        System.out.println(groups.get(1));
+                        try {
+                            ParseQuery<ParseObject> getGroup = ParseQuery.getQuery("Group");
+                            SearchFragment.setGroup(getGroup.get(groups.get(3)));
+                        } catch (Exception e) {
+
+                        }
                     }
+                    vp.setCurrentItem(1); //Switches to SearchFragment
                 }
             });
 
@@ -191,28 +224,12 @@ public class GroupFragment extends Fragment {
                             groupText = "";
                         }
                     } catch (Exception e) {
-                        System.out.println("Something Went Wrong");
+                        System.out.println("Something Went Wrong: " + e.getMessage());
                     }
                 }
 
-
-                ;//Depends on valid group, need to add failsafe as mentioned above if group doesn't exist on server
-                //Testing setting users to the group
-                //System.out.println("Out of loop" + users.get(0));
                 query.cancel();
 
-                //Cycle through users list. u is a user ID
-                //I don't believe the commented below is needed.
-                /*for (String u : users) {
-                    try {
-                        ParseObject obj = query2.get(u);
-                        //System.out.println("Name 1 " + obj.get("name"));
-                        groupText += obj.get("name");
-                        groupText += ", ";
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                }*/
                 if(groupText.length() > 3) groupText = groupText.substring(0, groupText.length() - 2);
                 //System.out.println("GroupText " + groupText);
                 //Ensures no out of bounds is thrown when populating the text boxes. If less than 4 groups, the other boxes will be given blank text
@@ -267,10 +284,5 @@ public class GroupFragment extends Fragment {
                 groupText = "";
             } else System.out.println("No Valid Group");//TODO Add to UI
         } else System.out.println("No Valid User");//TODO Add to UI
-
-
-        return view;
     }
-
-
 }
