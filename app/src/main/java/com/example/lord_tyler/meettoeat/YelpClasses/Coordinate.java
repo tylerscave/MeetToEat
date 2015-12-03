@@ -19,5 +19,25 @@ public class Coordinate {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+
+	/**
+	 * Checks coordinates
+	 * @param c coordinates
+	 * @return whether or not coordinates are the same
+	 * Method Programmed By Shubaan Taheri
+	 */
+	@Override
+	public boolean equals(Object c)
+	{
+		Coordinate coordinate = (Coordinate)c;
+		if (this.latitude == coordinate.getLatitude() && this.longitude == coordinate.getLongitude())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 }

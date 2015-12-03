@@ -9,17 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 /**
- *COPYRIGHT (C) 2015 Tyler Jones and Shubaan Taheri. All Rights Reserved.
- * The SearchResultsFragment class is responsible for displaying search results and sending
- * those results to the rest of any group that has been selected
- * Solves CS151-05 Group Project MeetToEat
- * @author Tyler Jones and Shubaan Taheri
- * @version 1.01 12/08/2015
+ * Created by lord_tyler on 11/3/15.
  */
 public class SearchResultFragment extends Fragment implements View.OnClickListener {
     private static TextView textView;
@@ -27,16 +23,9 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
     private static ParseObject group;
     private static String theResult = null;
 
-    /**
-     * onCreateView sets up the view of this fragment when it is selected
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return view
-     */
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_searchresult,
                 container, false);
         // set up textview for yelp result
@@ -44,14 +33,10 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
         // set up button to send result to other users
         sendResultButton = (Button) view.findViewById(R.id.btn_send);
         sendResultButton.setOnClickListener(this);
+
         return view;
     }
 
-    /**
-     * changeText is a mutator to set the correct textview based on the result found in
-     * the SearchFragment
-     * @param result the search result
-     */
     public static void changeText(final String result) {
         theResult = result;
         textView.setText(result);
@@ -59,19 +44,15 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
     }
 
     /**
-     * onClick is the listener for the send results to group button
-     * @param v the view
+     * Send restaurant result to parse
+     * @param v
+     * Method Programmed By Shubaan Taheri
      */
     public void onClick(View v) {
-        // get the current group from Parse
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
         query.getInBackground(group.getObjectId(), new GetCallback<ParseObject>() {
 
-            /**
-             * done is what takes place when the query is returned
-             * @param object
-             * @param e the exception
-             */
             @Override
             public void done(ParseObject object, com.parse.ParseException e) {
                 if (e == null) {
@@ -80,22 +61,27 @@ public class SearchResultFragment extends Fragment implements View.OnClickListen
                     Toast.makeText(getActivity(), "Your search result was sent to your group",
                                 Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("Error: something went wrong with send to group button");
+                        // something went wrong
                 }
             }
         });
     }
 
     /**
-     * setGroup is the mutator so set the group if it exists, otherwise it makes the
-     * send to group button invisible
-     * @param g the group
+     * Sets group selected
+     * @param g group selected
+     * Method Programmed By Shubaan Taheri
      */
-    public static void setGroup(ParseObject g) {
+    public static void setGroup(ParseObject g)
+    {
         group = g;
-        if (group == null) {
+        if (group == null)
+        {
             sendResultButton.setVisibility(View.INVISIBLE);
         }
     }
+
+    
+
 }
 
