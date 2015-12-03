@@ -5,12 +5,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Tyler
+ *COPYRIGHT (C) 2015 Tyler Jones. All Rights Reserved.
+ * The LocationActivity class is responsible for all of our location work. this class will get the
+ * users location by the best method available (either gps or network). The class also makes use of
+ * a timer to avoid waiting too long for a new location.
+ * Solves CS151-05 Group Project MeetToEat
+ * @author Tyler Jones
+ * @version 1.01 12/08/2015
  */
 public class LocationActivity {
     Timer timer1;
@@ -19,9 +24,15 @@ public class LocationActivity {
     boolean gps_enabled = false;
     boolean network_enabled = false;
 
+    /**
+     * getLocation sets up the location providers and listens for location updates
+     * @param context
+     * @param result
+     * @return true if provider is available and location can be accessed
+     */
     public boolean getLocation(Context context, LocationResult result) {
 
-        //I use LocationResult callback class to pass location value from LocationActivity to user code.
+        //LocationResult callback class to pass location value from LocationActivity to user code.
         locationResult = result;
         if (lm == null)
             lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -49,6 +60,9 @@ public class LocationActivity {
         return true;
     }
 
+    /**
+     * anonymous inner class for gps LocationListener
+     */
     LocationListener locationListenerGps = new LocationListener() {
         public void onLocationChanged(Location location) {
             timer1.cancel();
@@ -61,6 +75,9 @@ public class LocationActivity {
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     };
 
+    /**
+     * anonymous inner class for network LocationListener
+     */
     LocationListener locationListenerNetwork = new LocationListener() {
         public void onLocationChanged(Location location) {
             timer1.cancel();
@@ -73,6 +90,10 @@ public class LocationActivity {
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     };
 
+    /**
+     * GetLastLocation is an inner class for the case that location update was not available
+     * This class works to get the last known location
+     */
     class GetLastLocation extends TimerTask {
         @Override
         public void run() {
@@ -106,6 +127,9 @@ public class LocationActivity {
         }
     }
 
+    /**
+     * abstract inner class will be used to get the location result
+     */
     public static abstract class LocationResult{
         public abstract void gotLocation(Location location);
     }

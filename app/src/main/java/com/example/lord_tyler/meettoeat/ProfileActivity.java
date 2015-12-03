@@ -7,30 +7,34 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.lord_tyler.meettoeat.LocationActivity.LocationResult;
 import com.parse.ParseACL;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.ui.ParseLoginBuilder;
 
-
 /**
- * Shows the user profile. This simple activity can function regardless of whether the user
- * is currently logged in.
+ *COPYRIGHT (C) 2015 Tyler Jones. All Rights Reserved.
+ * The ProfileActivity class shows the user profile. This simple activity can function regardless
+ * of whether the user is currently logged in. This class also gets the user location so that it
+ * happens only once at the beginning to avoid using too many resources
+ * Solves CS151-05 Group Project MeetToEat
+ * @author Tyler Jones
+ * @version 1.01 12/08/2015
  */
 public class ProfileActivity extends Activity {
     private static final int LOGIN_REQUEST = 0;
-
     private TextView titleTextView;
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
     private double latitude;
     private double longitude;
-
     private ParseUser currentUser;
 
+    /**
+     * onCreate is called when app first begins and sets up user profile and login info
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,9 @@ public class ProfileActivity extends Activity {
         loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
         titleTextView.setText(R.string.profile_title_logged_in);
 
+        /**
+         * anonymous inner class to listen for click on login or logout
+         */
         loginOrLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +67,9 @@ public class ProfileActivity extends Activity {
         });
     }
 
+    /**
+     * onStart sets user login state on start
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -72,15 +82,20 @@ public class ProfileActivity extends Activity {
         }
     }
 
+    /**
+     * showProfileLoggedIn sets up the user with parse as logged in. this method is also responsible
+     * for getting the user location on start
+     */
     private void showProfileLoggedIn() {
 
         ParseACL.setDefaultACL(new ParseACL(), true);
         Intent intent = new Intent(this, BasicActivity.class);
         startActivity(intent);
+        // keep trying to get location until it has been accessed
         while (latitude == 0.0) {
             // Get the location of the parse user and send to database
             LocationActivity myLocation = new LocationActivity();
-            LocationResult locationResult = new LocationResult() {
+            LocationActivity.LocationResult locationResult = new LocationActivity.LocationResult() {
                 @Override
                 public void gotLocation(Location location) {
                     latitude = location.getLatitude();
@@ -88,19 +103,17 @@ public class ProfileActivity extends Activity {
                 }
             };
             myLocation.getLocation(this, locationResult);
+            // add in a small sleep to minimize use of system resources
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        // send the location to parse as a geopoint
         ParseGeoPoint geoPoint = new ParseGeoPoint(latitude,longitude);
         currentUser.put("userLocation", geoPoint);
         currentUser.saveInBackground();
-
-        //test to see if location is captured delete later
-        System.out.println("location = " + latitude + " " + longitude);
-
     }
 
     /**
