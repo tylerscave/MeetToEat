@@ -5,7 +5,7 @@ import android.test.InstrumentationTestCase;
 import com.example.lord_tyler.meettoeat.YelpClasses.RunMe;
 
 /**
- * Created by stephencheung on 12/2/15.
+ * Created by stephencheung on 12/2/15
  */
 public class SearchTest extends InstrumentationTestCase {
 
