@@ -13,17 +13,16 @@ import java.security.acl.Group;
 
 /**
  * Created by shubaantaheri on 12/1/15.
+ * Tests to see if search result string from Parse matches the users search result
  */
 public class SearchResultFragmentTest extends TestCase {
 
     public void testOnClick() throws Exception {
-        final int groupID = 1234;
-        ParseObject group;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
         query.getInBackground("hN3rYXPoZa", new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, com.parse.ParseException e) {
-                if (e == null) {
+                if (e == null) { //Parse object successfully retrieved
                     assertSame("Wendy's\n" +
                             "1940 S Ohio St\n" +
                             "Salina\n" +
@@ -32,6 +31,6 @@ public class SearchResultFragmentTest extends TestCase {
 
                 }
                 else
-                    assertTrue(e==null);
+                    assertTrue(false); //Test fails
             }});}}
 
